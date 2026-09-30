@@ -1,0 +1,1 @@
+{"ckb_lock_version":"0.1","entries":[{"repo_url":"https://github.com/example/a.git","ref":"main","kb_commit":"1111111111111111111111111111111111111111","analysed_commit_sha":"1111111111111111111111111111111111111111","ckb_version":"0.1","artifact_path":".ckb/ckb.json","artifact_sha256":"abc","freshness":"fresh"}]}

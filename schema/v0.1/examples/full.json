@@ -6,7 +6,7 @@
     "commit_sha": "89abcdef0123456789abcdef0123456789abcdef",
     "generated_at": "2026-09-30T12:00:00Z"
   },
-  "generator": { "name": "code-knowledge-base", "version": "0.1.0" },
+  "generator": { "name": "codebase-kb-engine", "version": "0.1.0" },
   "confidence_summary": { "confirmed": 7, "inferred": 2, "unknown": 1, "overall": "inferred" },
   "entities": {
     "components": [

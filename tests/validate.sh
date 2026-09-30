@@ -35,6 +35,19 @@ for f in "$ROOT"/tests/invalid-semantic/*.json; do
   structural "$f" || { echo "FAIL fixture $(basename "$f") must be schema-valid"; fail=1; continue; }
   if [ "$(semantic "$f" | jq length)" -gt 0 ]; then echo "PASS reject  $(basename "$f") [semantic]"; else echo "FAIL reject  $(basename "$f") [semantic accepted it]"; fail=1; fi
 done
+LOCK="$ROOT/schema/$VER/ckb-lock.schema.json"
+lockcheck(){ uvx --quiet check-jsonschema --schemafile "$LOCK" "$1" >/dev/null 2>&1; }
+uvx --quiet check-jsonschema --check-metaschema "$LOCK" >/dev/null || { echo "FAIL lock schema is not valid 2020-12"; fail=1; }
+for f in "$ROOT"/schema/"$VER"/lock-examples/*.json; do
+  if lockcheck "$f" && [ "$(jq -f "$ROOT/tests/lock-semantic.jq" "$f" | jq length)" = 0 ]; then echo "PASS valid   $(basename "$f") [lock]"; else echo "FAIL valid   $(basename "$f") [lock]"; fail=1; fi
+done
+for f in "$ROOT"/tests/invalid-lock/*.json; do
+  if lockcheck "$f"; then echo "FAIL reject  $(basename "$f") [lock] (schema accepted it)"; fail=1; else echo "PASS reject  $(basename "$f") [lock]"; fi
+done
+for f in "$ROOT"/tests/invalid-lock-semantic/*.json; do
+  lockcheck "$f" || { echo "FAIL fixture $(basename "$f") must be lock-schema-valid"; fail=1; continue; }
+  if [ "$(jq -f "$ROOT/tests/lock-semantic.jq" "$f" | jq length)" -gt 0 ]; then echo "PASS reject  $(basename "$f") [lock semantic]"; else echo "FAIL reject  $(basename "$f") [lock semantic accepted it]"; fail=1; fi
+done
 rm -f /tmp/ckb.$$
 [ $fail -eq 0 ] && echo "ALL PASS" || echo "FAILURES"
 exit $fail
