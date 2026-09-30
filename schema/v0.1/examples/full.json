@@ -1,0 +1,56 @@
+{
+  "ckb_version": "0.1",
+  "repo": {
+    "url": "https://github.com/example/orders-service.git",
+    "branch": "main",
+    "commit_sha": "89abcdef0123456789abcdef0123456789abcdef",
+    "generated_at": "2026-09-30T12:00:00Z"
+  },
+  "generator": { "name": "code-knowledge-base", "version": "0.1.0" },
+  "confidence_summary": { "confirmed": 7, "inferred": 2, "unknown": 1, "overall": "inferred" },
+  "entities": {
+    "components": [
+      { "id": "component:src/orders", "name": "orders", "module_id": "src/orders", "kind": "service", "language": "typescript",
+        "confidence": "confirmed", "provenance": [{ "path": "src/orders/index.ts", "line": 1 }] }
+    ],
+    "interfaces": [
+      { "id": "interface:http:provides:GET:/orders/{order_id}", "name": "Get order", "kind": "http", "role": "provides",
+        "http": { "method": "GET", "normalized_path": "/orders/{order_id}" },
+        "confidence": "confirmed", "provenance": [{ "path": "src/orders/routes.ts", "line": 14, "end_line": 32 }] },
+      { "id": "interface:http:consumes:POST:/payments", "name": "Charge payment", "kind": "http", "role": "consumes",
+        "http": { "method": "POST", "normalized_path": "/payments", "host": "payments-service" },
+        "confidence": "inferred", "provenance": [{ "path": "src/orders/payments-client.ts", "line": 8 }] },
+      { "id": "interface:event:provides:kafka:orders.created", "name": "Order created event", "kind": "event", "role": "provides",
+        "event": { "transport": "kafka", "topic": "orders.created" },
+        "confidence": "confirmed", "provenance": [{ "path": "src/orders/events.ts", "line": 21 }] }
+    ],
+    "dependencies": [
+      { "id": "dependency:npm:@example/money", "name": "@example/money", "package_key": "npm:@example/money", "version_constraint": "^2.1.0", "scope": "runtime",
+        "confidence": "confirmed", "provenance": [{ "path": "package.json", "line": 12 }] }
+    ],
+    "datastores": [
+      { "id": "datastore:postgres:public.orders", "name": "orders table", "engine": "postgres", "schema": "public", "table": "orders", "access": "readwrite",
+        "confidence": "confirmed", "provenance": [{ "path": "migrations/001_orders.sql", "line": 1 }] }
+    ],
+    "business_rules": [
+      { "id": "business_rule:orders-over-limit-need-review", "name": "High-value review", "statement": "Orders above 10000 USD are held for manual review.",
+        "applies_to": ["component:src/orders"],
+        "confidence": "inferred", "provenance": [{ "path": "src/orders/rules.ts", "line": 40 }] },
+      { "id": "business_rule:refund-window", "name": "Refund window", "statement": "Refund window length could not be determined from code.",
+        "confidence": "unknown", "provenance": [] }
+    ],
+    "workflows": [
+      { "id": "workflow:place-order", "name": "Place order", "trigger": "POST /orders",
+        "steps": [
+          { "order": 1, "description": "Persist order", "entity_id": "datastore:postgres:public.orders" },
+          { "order": 2, "description": "Charge payment", "entity_id": "interface:http:consumes:POST:/payments" },
+          { "order": 3, "description": "Emit orders.created", "entity_id": "interface:event:provides:kafka:orders.created" }
+        ],
+        "confidence": "confirmed", "provenance": [{ "path": "src/orders/place-order.ts", "line": 5, "end_line": 60 }] }
+    ]
+  },
+  "relations": [
+    { "from": "component:src/orders", "to": "datastore:postgres:public.orders", "kind": "writes",
+      "confidence": "confirmed", "provenance": [{ "path": "src/orders/repo.ts", "line": 18 }] }
+  ]
+}
