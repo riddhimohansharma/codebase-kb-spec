@@ -6,7 +6,7 @@ Every artifact declares `"ckb_version"`. A consumer MUST reject, or explicitly d
 ## Draft: `0.x` (current)
 > **Unstable. Breaking changes may land in any `0.x` release without notice or deprecation window.**
 
-Producers and consumers that target `0.x` must pin the exact version (`"0.1"`) and expect to update on each release.
+Producers and consumers that target `0.x` must pin the exact version (for example `"0.2"`) and expect to update on each release.
 
 ## Stable: `1.0` and later (Semantic Versioning)
 | Change | Bump |
@@ -27,4 +27,4 @@ All of these must hold, with evidence linked in the release notes:
 4. Regenerating an artifact at the same commit yields identical entity IDs.
 
 ## Extensions
-Top-level keys beginning with `x-` are reserved for vendor extensions. They never affect conformance, and consumers MUST ignore any they do not understand.
+Keys beginning with `x-` are reserved for vendor extensions (top level only in v0.1; also on every entity and relation from v0.2). They never affect conformance, and consumers MUST ignore any they do not understand.

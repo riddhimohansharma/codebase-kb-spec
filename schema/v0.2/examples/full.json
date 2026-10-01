@@ -1,0 +1,196 @@
+{
+  "ckb_version": "0.2",
+  "repo": {
+    "url": "https://github.com/example/orders-service",
+    "branch": "main",
+    "commit_sha": "89abcdef0123456789abcdef0123456789abcdef",
+    "generated_at": "2026-09-30T12:00:00Z"
+  },
+  "generator": { "name": "codebase-kb-engine", "version": "0.8.0" },
+  "repo_profile": {
+    "languages": [{ "name": "typescript", "files": 118 }, { "name": "sql", "files": 4 }],
+    "frameworks": ["express"],
+    "build_tools": ["npm", "docker"],
+    "license": "MIT",
+    "owners": [{ "name": "@example/orders-team", "source": "codeowners" }]
+  },
+  "coverage": {
+    "files_total": 142,
+    "sampled": false,
+    "buckets": {
+      "manifests": { "found": 2, "cited": 2, "uncited": [] },
+      "lockfiles": { "found": 1, "cited": 0, "uncited": ["package-lock.json"] },
+      "routes": { "found": 3, "cited": 2, "uncited": ["src/orders/admin-routes.ts"] },
+      "events": { "found": 1, "cited": 1, "uncited": [] },
+      "datastores": { "found": 2, "cited": 2, "uncited": [] },
+      "migrations": { "found": 4, "cited": 1, "uncited": ["migrations/002_index.sql", "migrations/003_status.sql", "migrations/004_audit.sql"] },
+      "iac": { "found": 1, "cited": 1, "uncited": [] },
+      "ci": { "found": 1, "cited": 1, "uncited": [] },
+      "config": { "found": 2, "cited": 2, "uncited": [] },
+      "api_specs": { "found": 1, "cited": 1, "uncited": [] }
+    }
+  },
+  "confidence_summary": { "confirmed": 47, "inferred": 7, "unknown": 1, "overall": "inferred" },
+  "entities": {
+    "components": [
+      { "id": "component:src", "name": "src", "module_id": "src", "kind": "module", "language": "typescript",
+        "confidence": "confirmed", "provenance": [{ "path": "src/index.ts", "line": 1 }] },
+      { "id": "component:src/orders", "name": "orders", "module_id": "src/orders", "kind": "service", "language": "typescript",
+        "x-owner-team": "orders",
+        "confidence": "confirmed", "provenance": [{ "path": "src/orders/index.ts", "line": 1 }] },
+      { "id": "component:src/lib", "name": "lib", "module_id": "src/lib", "kind": "library", "language": "typescript",
+        "confidence": "confirmed", "provenance": [{ "path": "src/lib/index.ts", "line": 1 }] },
+      { "id": "component:packages/orders-client", "name": "orders-client", "module_id": "packages/orders-client", "kind": "library", "language": "typescript",
+        "confidence": "confirmed", "provenance": [{ "path": "packages/orders-client/src/index.ts", "line": 1 }] }
+    ],
+    "interfaces": [
+      { "id": "interface:http:provides:orders-service:GET:/orders/{order_id}", "name": "Get order", "kind": "http", "role": "provides",
+        "service_key": "orders-service",
+        "http": { "method": "GET", "normalized_path": "/orders/{order_id}" },
+        "confidence": "confirmed", "provenance": [{ "path": "src/orders/routes.ts", "line": 14, "end_line": 32 }] },
+      { "id": "interface:http:consumes:payments-service:POST:/payments", "name": "Charge payment", "kind": "http", "role": "consumes",
+        "http": { "method": "POST", "normalized_path": "/payments", "host": "payments-service" },
+        "confidence": "inferred", "provenance": [{ "path": "src/orders/payments-client.ts", "line": 8 }] },
+      { "id": "interface:event:provides:kafka:orders.created", "name": "Order created event", "kind": "event", "role": "provides",
+        "event": { "transport": "kafka", "topic": "orders.created" },
+        "confidence": "confirmed", "provenance": [{ "path": "src/orders/events.ts", "line": 21 }] },
+      { "id": "interface:event:consumes:kafka:payments.settled", "name": "Payment settled event", "kind": "event", "role": "consumes",
+        "event": { "transport": "kafka", "topic": "payments.settled" },
+        "confidence": "confirmed", "provenance": [{ "path": "src/orders/events.ts", "line": 40 }] },
+      { "id": "interface:websocket:provides:orders-service:/orders/stream", "name": "Order status stream", "kind": "websocket", "role": "provides",
+        "service_key": "orders-service",
+        "websocket": { "normalized_path": "/orders/stream" },
+        "confidence": "confirmed", "provenance": [{ "path": "src/orders/stream.ts", "line": 9 }] },
+      { "id": "interface:rpc:consumes:grpc:payments.v1.PaymentService/Refund", "name": "Refund payment", "kind": "rpc", "role": "consumes",
+        "rpc": { "protocol": "grpc", "service": "payments.v1.PaymentService", "method": "Refund" },
+        "confidence": "confirmed", "provenance": [{ "path": "src/orders/refunds.ts", "line": 12 }] },
+      { "id": "interface:library:provides:createOrdersClient", "name": "createOrdersClient", "kind": "library", "role": "provides",
+        "symbol": "createOrdersClient",
+        "confidence": "confirmed", "provenance": [{ "path": "packages/orders-client/src/index.ts", "line": 3 }] }
+    ],
+    "dependencies": [
+      { "id": "dependency:pkg:npm/%40example/money@package.json", "name": "@example/money", "purl": "pkg:npm/%40example/money",
+        "manifest_path": "package.json", "scope": "runtime", "version_constraint": "^2.1.0", "resolved_version": "2.1.4", "source": "registry",
+        "confidence": "confirmed", "provenance": [{ "path": "package.json", "line": 12 }] },
+      { "id": "dependency:pkg:npm/express@package.json", "name": "express", "purl": "pkg:npm/express",
+        "manifest_path": "package.json", "scope": "runtime", "version_constraint": "^4.19.0", "source": "registry",
+        "confidence": "confirmed", "provenance": [{ "path": "package.json", "line": 13 }] },
+      { "id": "dependency:pkg:npm/%40example/http-kit@packages/orders-client/package.json", "name": "@example/http-kit", "purl": "pkg:npm/%40example/http-kit",
+        "manifest_path": "packages/orders-client/package.json", "scope": "peer", "version_constraint": ">=1", "source": "registry",
+        "confidence": "confirmed", "provenance": [{ "path": "packages/orders-client/package.json", "line": 18 }] },
+      { "id": "dependency:pkg:github/actions/checkout@.github/workflows/ci.yml", "name": "actions/checkout", "purl": "pkg:github/actions/checkout",
+        "manifest_path": ".github/workflows/ci.yml", "scope": "build", "version_constraint": "v4", "source": "git",
+        "confidence": "confirmed", "provenance": [{ "path": ".github/workflows/ci.yml", "line": 10 }] }
+    ],
+    "datastores": [
+      { "id": "datastore:postgres:ORDERS_DATABASE_URL:public.orders", "name": "orders table", "engine": "postgres",
+        "instance_key": "ORDERS_DATABASE_URL", "schema": "public", "table": "orders", "access": "readwrite",
+        "confidence": "confirmed", "provenance": [{ "path": "migrations/001_orders.sql", "line": 1 }] },
+      { "id": "datastore:redis:_:order-cache", "name": "Order cache", "engine": "redis", "access": "read",
+        "confidence": "inferred", "provenance": [{ "path": "src/orders/cache.ts", "line": 4 }] }
+    ],
+    "business_rules": [
+      { "id": "business_rule:orders-over-limit-need-review", "name": "High-value review", "statement": "Orders above 10000 USD are held for manual review.",
+        "applies_to": ["component:src/orders"],
+        "confidence": "inferred", "provenance": [{ "path": "src/orders/rules.ts", "line": 40 }] },
+      { "id": "business_rule:refund-window", "name": "Refund window", "statement": "Refund window length could not be determined from code.",
+        "confidence": "unknown", "provenance": [] }
+    ],
+    "workflows": [
+      { "id": "workflow:place-order", "name": "Place order", "trigger": "POST /orders",
+        "steps": [
+          { "order": 1, "description": "Persist order", "entity_id": "datastore:postgres:ORDERS_DATABASE_URL:public.orders" },
+          { "order": 2, "description": "Charge payment", "entity_id": "interface:http:consumes:payments-service:POST:/payments" },
+          { "order": 3, "description": "Emit orders.created", "entity_id": "interface:event:provides:kafka:orders.created" }
+        ],
+        "confidence": "confirmed", "provenance": [{ "path": "src/orders/place-order.ts", "line": 5, "end_line": 60 }] }
+    ],
+    "artifacts": [
+      { "id": "artifact:pkg:npm/%40example/orders-client", "name": "@example/orders-client", "kind": "package", "purl": "pkg:npm/%40example/orders-client",
+        "version": "1.4.0", "manifest_path": "packages/orders-client/package.json",
+        "confidence": "confirmed", "provenance": [{ "path": "packages/orders-client/package.json", "line": 2 }] },
+      { "id": "artifact:pkg:docker/example/orders-service", "name": "orders-service image", "kind": "container_image", "purl": "pkg:docker/example/orders-service",
+        "manifest_path": "Dockerfile",
+        "confidence": "confirmed", "provenance": [{ "path": "Dockerfile", "line": 1 }] }
+    ],
+    "services": [
+      { "id": "service:orders-service", "name": "orders-service", "service_key": "orders-service", "runtime": "k8s",
+        "ports": [8080], "environments": ["staging", "production"],
+        "confidence": "confirmed", "provenance": [{ "path": "deploy/k8s/deployment.yaml", "line": 4 }] }
+    ],
+    "config_keys": [
+      { "id": "config:env:ORDERS_DATABASE_URL", "name": "ORDERS_DATABASE_URL", "source": "env", "is_secret": true,
+        "confidence": "confirmed", "provenance": [{ "path": "src/orders/db.ts", "line": 3 }] },
+      { "id": "config:env:STRIPE_API_KEY", "name": "STRIPE_API_KEY", "source": "env", "is_secret": true,
+        "confidence": "confirmed", "provenance": [{ "path": "src/orders/stripe.ts", "line": 2 }] },
+      { "id": "config:k8s_configmap:LOG_LEVEL", "name": "LOG_LEVEL", "source": "k8s_configmap", "is_secret": false,
+        "confidence": "confirmed", "provenance": [{ "path": "deploy/k8s/deployment.yaml", "line": 30 }] }
+    ],
+    "external_services": [
+      { "id": "external:api.stripe.com", "name": "Stripe API", "domain": "api.stripe.com", "vendor": "Stripe", "category": "payments",
+        "confidence": "confirmed", "provenance": [{ "path": "src/orders/stripe.ts", "line": 5 }] }
+    ],
+    "api_specs": [
+      { "id": "api_spec:openapi/orders.yaml", "name": "Orders API", "path": "openapi/orders.yaml", "format": "openapi", "version": "3.1.0",
+        "confidence": "confirmed", "provenance": [{ "path": "openapi/orders.yaml", "line": 1 }] }
+    ]
+  },
+  "relations": [
+    { "from": "component:src", "to": "component:src/orders", "kind": "contains",
+      "confidence": "confirmed", "provenance": [{ "path": "src/index.ts", "line": 2 }] },
+    { "from": "component:src", "to": "component:src/lib", "kind": "contains",
+      "confidence": "confirmed", "provenance": [{ "path": "src/index.ts", "line": 3 }] },
+    { "from": "component:src/orders", "to": "component:src/lib", "kind": "imports",
+      "confidence": "confirmed", "provenance": [{ "path": "src/orders/index.ts", "line": 2 }] },
+    { "from": "component:src/orders", "to": "dependency:pkg:npm/%40example/money@package.json", "kind": "depends_on",
+      "confidence": "confirmed", "provenance": [{ "path": "src/orders/pricing.ts", "line": 1 }] },
+    { "from": "component:src/orders", "to": "dependency:pkg:npm/express@package.json", "kind": "depends_on",
+      "confidence": "confirmed", "provenance": [{ "path": "src/orders/server.ts", "line": 1 }] },
+    { "from": "component:packages/orders-client", "to": "dependency:pkg:npm/%40example/http-kit@packages/orders-client/package.json", "kind": "depends_on",
+      "confidence": "confirmed", "provenance": [{ "path": "packages/orders-client/src/index.ts", "line": 1 }] },
+    { "from": "component:packages/orders-client", "to": "component:src/lib", "kind": "depends_on",
+      "confidence": "inferred", "provenance": [{ "path": "packages/orders-client/tsconfig.json", "line": 6 }] },
+    { "from": "component:src/orders", "to": "interface:http:provides:orders-service:GET:/orders/{order_id}", "kind": "provides",
+      "confidence": "confirmed", "provenance": [{ "path": "src/orders/routes.ts", "line": 14 }] },
+    { "from": "component:packages/orders-client", "to": "interface:library:provides:createOrdersClient", "kind": "provides",
+      "confidence": "confirmed", "provenance": [{ "path": "packages/orders-client/src/index.ts", "line": 3 }] },
+    { "from": "component:src/orders", "to": "interface:http:consumes:payments-service:POST:/payments", "kind": "consumes",
+      "confidence": "inferred", "provenance": [{ "path": "src/orders/payments-client.ts", "line": 8 }] },
+    { "from": "component:src/orders", "to": "interface:rpc:consumes:grpc:payments.v1.PaymentService/Refund", "kind": "calls",
+      "confidence": "confirmed", "provenance": [{ "path": "src/orders/refunds.ts", "line": 12 }] },
+    { "from": "component:src/orders", "to": "datastore:redis:_:order-cache", "kind": "reads",
+      "confidence": "inferred", "provenance": [{ "path": "src/orders/cache.ts", "line": 10 }] },
+    { "from": "component:src/orders", "to": "datastore:postgres:ORDERS_DATABASE_URL:public.orders", "kind": "writes",
+      "x-weight": 3,
+      "confidence": "confirmed", "provenance": [{ "path": "src/orders/repo.ts", "line": 18 }] },
+    { "from": "interface:http:provides:orders-service:GET:/orders/{order_id}", "to": "datastore:postgres:ORDERS_DATABASE_URL:public.orders", "kind": "reads",
+      "confidence": "confirmed", "provenance": [{ "path": "src/orders/routes.ts", "line": 20 }] },
+    { "from": "component:src/orders", "to": "interface:event:provides:kafka:orders.created", "kind": "publishes",
+      "confidence": "confirmed", "provenance": [{ "path": "src/orders/events.ts", "line": 21 }] },
+    { "from": "component:src/orders", "to": "interface:websocket:provides:orders-service:/orders/stream", "kind": "publishes",
+      "confidence": "confirmed", "provenance": [{ "path": "src/orders/stream.ts", "line": 15 }] },
+    { "from": "component:src/orders", "to": "interface:event:consumes:kafka:payments.settled", "kind": "subscribes",
+      "confidence": "confirmed", "provenance": [{ "path": "src/orders/events.ts", "line": 40 }] },
+    { "from": "component:src/orders", "to": "business_rule:orders-over-limit-need-review", "kind": "enforces",
+      "confidence": "inferred", "provenance": [{ "path": "src/orders/rules.ts", "line": 40 }] },
+    { "from": "component:packages/orders-client", "to": "artifact:pkg:npm/%40example/orders-client", "kind": "builds",
+      "confidence": "confirmed", "provenance": [{ "path": "packages/orders-client/package.json", "line": 2 }] },
+    { "from": "component:src/orders", "to": "artifact:pkg:docker/example/orders-service", "kind": "builds",
+      "confidence": "confirmed", "provenance": [{ "path": "Dockerfile", "line": 5 }] },
+    { "from": "component:src/orders", "to": "service:orders-service", "kind": "deploys_as",
+      "confidence": "confirmed", "provenance": [{ "path": "deploy/k8s/deployment.yaml", "line": 20 }] },
+    { "from": "service:orders-service", "to": "interface:http:provides:orders-service:GET:/orders/{order_id}", "kind": "exposes",
+      "confidence": "confirmed", "provenance": [{ "path": "deploy/k8s/service.yaml", "line": 8 }] },
+    { "from": "datastore:postgres:ORDERS_DATABASE_URL:public.orders", "to": "config:env:ORDERS_DATABASE_URL", "kind": "configured_by",
+      "confidence": "confirmed", "provenance": [{ "path": "src/orders/db.ts", "line": 3 }] },
+    { "from": "component:src/orders", "to": "config:env:STRIPE_API_KEY", "kind": "configured_by",
+      "confidence": "confirmed", "provenance": [{ "path": "src/orders/stripe.ts", "line": 2 }] },
+    { "from": "service:orders-service", "to": "config:k8s_configmap:LOG_LEVEL", "kind": "configured_by",
+      "confidence": "confirmed", "provenance": [{ "path": "deploy/k8s/deployment.yaml", "line": 30 }] },
+    { "from": "component:src/orders", "to": "external:api.stripe.com", "kind": "uses_external",
+      "confidence": "confirmed", "provenance": [{ "path": "src/orders/stripe.ts", "line": 5 }] },
+    { "from": "interface:http:provides:orders-service:GET:/orders/{order_id}", "to": "api_spec:openapi/orders.yaml", "kind": "specified_by",
+      "confidence": "confirmed", "provenance": [{ "path": "openapi/orders.yaml", "line": 12 }] }
+  ],
+  "x-generator-run": { "duration_ms": 1840 }
+}

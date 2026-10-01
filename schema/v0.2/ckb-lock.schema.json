@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/riddhimohansharma/codebase-kb-spec/schema/v0.2/ckb-lock.schema.json",
+  "title": "CKB lock file (ckb.lock.json)",
+  "description": "DRAFT v0.2. Written by a CONSUMER to pin exactly which committed CKB artifact it ingested from each repository, so a multi-repo graph is reproducible. Producers never write this file.",
+  "type": "object",
+  "required": ["ckb_lock_version", "entries"],
+  "additionalProperties": false,
+  "patternProperties": { "^x-": {} },
+  "properties": {
+    "ckb_lock_version": { "const": "0.2" },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["repo_url", "ref", "kb_commit", "analysed_commit_sha", "ckb_version", "artifact_path", "artifact_sha256", "freshness"],
+        "additionalProperties": false,
+        "properties": {
+          "repo_url": { "type": "string", "minLength": 1, "description": "Canonical clone URL, credentials stripped. Equals the artifact's repo.url." },
+          "ref": { "type": "string", "minLength": 1, "description": "Branch or tag the consumer read from." },
+          "kb_commit": { "$ref": "#/$defs/sha", "description": "Commit in which the artifact was read (contains ckb/ckb.json)." },
+          "analysed_commit_sha": { "$ref": "#/$defs/sha", "description": "The artifact's repo.commit_sha." },
+          "ckb_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$" },
+          "artifact_path": { "const": "ckb/ckb.json" },
+          "artifact_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "freshness": { "enum": ["fresh", "stale", "unknown"], "description": "Result of the freshness rule evaluated at kb_commit." }
+        }
+      }
+    }
+  },
+  "$defs": { "sha": { "type": "string", "pattern": "^[0-9a-f]{40}$|^[0-9a-f]{64}$" } }
+}
