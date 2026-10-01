@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/ckb-icon.svg" alt="CKB" width="120"></p>
+
 # CKB: Codebase Knowledge Base Specification
 
 > ⚠️ **DRAFT v0.2 — UNSTABLE.** Breaking changes may happen in any `0.x` release without notice. Pin `"ckb_version": "0.2"` exactly. See [VERSIONING.md](VERSIONING.md).
