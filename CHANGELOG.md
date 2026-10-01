@@ -1,7 +1,7 @@
 # Changelog
 
 ## 2026-10-01
-- Licensed under CC BY-ND 4.0; added TRADEMARKS.md and CONTRIBUTING.md.
+- Licensed under CC BY-ND 4.0; added TRADEMARKS.md. Contributions are not accepted.
 
 ## [0.2] — 2026-10-01
 - Artifacts, services, config keys, external services, API specs; purl dependency identity.

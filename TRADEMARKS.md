@@ -17,7 +17,7 @@
 - Claim conformance for software that fails the conformance suite.
 
 ## Proposing changes
-Open an issue in this repository describing the expressiveness gap, with a minimal example. Only the author publishes new versions of the specification. Accepted contributions require the Contributor License Agreement (see CONTRIBUTING.md).
+Open an issue in this repository describing the expressiveness gap, with a minimal example. Only the author publishes new versions of the specification, and contributions are not accepted.
 
 ## Contact
 For permissions and licensing, open an issue titled "Trademark/licensing request" or contact the author through GitHub (@riddhimohansharma).

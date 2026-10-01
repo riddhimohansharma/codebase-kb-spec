@@ -247,5 +247,5 @@ Expressiveness gaps (things a real repo has that CKB cannot express) are the mos
 
 - **Specification:** [CC BY-ND 4.0](LICENSE) © 2026 Riddhi Mohan Sharma. You may implement CKB in any software, including commercial software, and redistribute the spec **unmodified** with attribution. **Modified or extended versions may not be distributed without permission.** Vendor data belongs in `x-` fields.
 - **Names:** "CKB", "Codebase Knowledge Base" and "CKB-compatible" are governed by [TRADEMARKS.md](TRADEMARKS.md). "CKB-compatible" requires passing the conformance suite.
-- **Changes:** proposed through issues. See [CONTRIBUTING.md](CONTRIBUTING.md); accepted contributions require the CLA.
+- **Changes:** the spec has a single editor and accepts no contributions. Open an issue to report a gap (see [CONTRIBUTING.md](CONTRIBUTING.md)).
 - Revisions up to and including commit `39c5392` were published under MIT.

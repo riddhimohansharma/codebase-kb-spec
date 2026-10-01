@@ -1,10 +1,8 @@
-# Contributing to the CKB specification
+# Contributing
 
-The specification has a single editor, the author. That keeps CKB one standard instead of many incompatible forks.
+The CKB specification has a single editor, its author, and does **not accept contributions**: no pull requests or proposed text. Pull requests will be closed without review.
 
-- **Expressiveness gaps:** open an issue with a minimal real-world example of what CKB can't express today and why it matters for consumers. These issues drive new versions.
-- **Pull requests** are welcome for typos, examples and tests. Every PR requires the [Contributor License Agreement](https://github.com/riddhimohansharma/codebase-kb-engine/blob/main/CLA.md), signed through the CLA check on the PR.
-- **New fields, entity types or rules** are added only by the editor in a new version. Use `x-` fields for vendor data in the meantime.
-- Before submitting, run `tests/validate.sh` (it needs `jq` and `uv`).
+- **Gaps or errors:** open an issue describing what CKB can't express, with a minimal example. The editor decides whether and how to address it in a future version.
+- **Extensions:** use `x-` fields for vendor data. They carry no conformance meaning.
 
 License: CC BY-ND 4.0 (see LICENSE). Names: see TRADEMARKS.md.
