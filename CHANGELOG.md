@@ -5,6 +5,7 @@ All notable changes to the CKB specification. Format: [Keep a Changelog](https:/
 ## [0.1] — 2026-09-30 — DRAFT
 
 ### Changed
+- **Canonical location is now `<repo-root>/ckb/`** (was `.ckb/`), so the KB is visible in Finder, Explorer and `ls`. The freshness rule's pathspec, rule R7 and the lock file's `artifact_path` (`ckb/ckb.json`) follow. Draft 0.x permits this breaking change.
 - Repository renamed from `ckb-spec` to **`codebase-kb-spec`** to match the codebase-kb-* family. Schema `$id`s now use the new URL. The format name (CKB), `ckb.json` and `ckb_version` are unchanged.
 
 

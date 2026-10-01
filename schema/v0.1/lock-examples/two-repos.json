@@ -3,11 +3,11 @@
   "entries": [
     { "repo_url": "https://github.com/example/orders-service.git", "ref": "main",
       "kb_commit": "1111111111111111111111111111111111111111", "analysed_commit_sha": "89abcdef0123456789abcdef0123456789abcdef",
-      "ckb_version": "0.1", "artifact_path": ".ckb/ckb.json",
+      "ckb_version": "0.1", "artifact_path": "ckb/ckb.json",
       "artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "freshness": "fresh" },
     { "repo_url": "https://github.com/example/payments-service.git", "ref": "main",
       "kb_commit": "2222222222222222222222222222222222222222", "analysed_commit_sha": "3333333333333333333333333333333333333333",
-      "ckb_version": "0.1", "artifact_path": ".ckb/ckb.json",
+      "ckb_version": "0.1", "artifact_path": "ckb/ckb.json",
       "artifact_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "freshness": "stale" }
   ]
 }

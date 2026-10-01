@@ -25,28 +25,28 @@ A **producer** analyzes a codebase and writes a `ckb.json` artifact. A **consume
 
 ## Location: the KB lives in the repo
 
-A CKB is **committed inside the repository it describes**, at a fixed, well-known path, so the knowledge base is versioned with the code and any consumer can find it in any repo without running a producer:
+A CKB is **committed inside the repository it describes**, at a fixed, well-known path, so the knowledge base is versioned with the code and any consumer can find it in any repo without running a producer. The folder is deliberately **not** a dot-folder: it is documentation meant to be read, so it must show up in Finder, Explorer and `ls`, as well as on GitHub and in IDEs.
 
 ```
-<repo-root>/.ckb/
+<repo-root>/ckb/
 ├── ckb.json          # the artifact (this spec)  ← canonical, REQUIRED
 ├── manifest.json     # producer job record (optional, producer-defined)
 ├── README.md         # human index (optional)
 └── *.md              # human-readable docs (optional)
 ```
 
-- Producers MUST write only inside `.ckb/`, and MUST NOT analyse or cite `.ckb/` itself (see R7).
-- Producers SHOULD NOT commit. A person or CI commits `.ckb/`, which keeps generation read-only.
+- Producers MUST write only inside `ckb/`, and MUST NOT analyse or cite `ckb/` itself (see R7).
+- Producers SHOULD NOT commit. A person or CI commits `ckb/`, which keeps generation read-only.
 - A repo analysed without write access (for example a third-party clone) produces the same layout elsewhere. It is simply not committed.
 
 ## Freshness: `commit_sha` and the committed KB
 
-`repo.commit_sha` is the **source commit that was analysed**. Committing `.ckb/` creates a new commit, which is expected. The artifact is still accurate because only the KB changed.
+`repo.commit_sha` is the **source commit that was analysed**. Committing `ckb/` creates a new commit, which is expected. The artifact is still accurate because only the KB changed.
 
 > **Freshness rule.** An artifact is **fresh at commit `Y`** if and only if
-> `git diff --quiet <commit_sha> Y -- . ':(exclude).ckb'` succeeds, meaning no file outside `.ckb/` changed between the analysed commit and `Y`. Otherwise it is **stale**. If `commit_sha` is not an ancestor of `Y` or not present, it is **unknown**.
+> `git diff --quiet <commit_sha> Y -- . ':(exclude)ckb'` succeeds, meaning no file outside `ckb/` changed between the analysed commit and `Y`. Otherwise it is **stale**. If `commit_sha` is not an ancestor of `Y` or not present, it is **unknown**.
 
-Producers use this rule to skip regeneration when nothing changed. Consumers use it to decide whether to trust or re-request an artifact. Because the rule excludes `.ckb/`, committing the KB never makes it stale.
+Producers use this rule to skip regeneration when nothing changed. Consumers use it to decide whether to trust or re-request an artifact. Because the rule excludes `ckb/`, committing the KB never makes it stale.
 
 ## The five load-bearing guarantees
 
@@ -104,7 +104,7 @@ An artifact conforms to CKB v0.1 when it:
    - **R4**: `confidence_summary` counts equal the actual claim counts.
    - **R5**: workflow step `order` values run 1..n with no gaps.
    - **R6**: `end_line` is not less than `line`.
-   - **R7**: no provenance path, and no component `module_id`, points into `.ckb/`. The KB never describes itself.
+   - **R7**: no provenance path, and no component `module_id`, points into `ckb/`. The KB never describes itself.
 
 Cross-repo references are **never** written as IDs. A consumer resolves them through join keys.
 
@@ -124,12 +124,12 @@ A consumer that builds a view across many repositories MUST pin exactly what it 
 | Field | Meaning |
 |---|---|
 | `repo_url`, `ref` | Where the artifact was read (credentials stripped) |
-| `kb_commit` | The commit the consumer read `.ckb/ckb.json` from |
+| `kb_commit` | The commit the consumer read `ckb/ckb.json` from |
 | `analysed_commit_sha` | The artifact's `repo.commit_sha` |
 | `artifact_sha256` | Hash of the exact bytes ingested |
 | `freshness` | The freshness rule evaluated at `kb_commit` |
 
-Lock rules: **L1**, one entry per `(repo_url, ref)`; **L2**, entries sorted by `(repo_url, ref)` so lock diffs stay minimal. To upgrade, a consumer re-reads each repo's `.ckb/ckb.json` and rewrites only the entries that changed. The same lock file therefore reproduces the same cross-repo result, the way a package lockfile does.
+Lock rules: **L1**, one entry per `(repo_url, ref)`; **L2**, entries sorted by `(repo_url, ref)` so lock diffs stay minimal. To upgrade, a consumer re-reads each repo's `ckb/ckb.json` and rewrites only the entries that changed. The same lock file therefore reproduces the same cross-repo result, the way a package lockfile does.
 
 Producers never read or write lock files.
 

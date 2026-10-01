@@ -18,10 +18,10 @@
         "properties": {
           "repo_url": { "type": "string", "minLength": 1, "description": "Canonical clone URL, credentials stripped. Equals the artifact's repo.url." },
           "ref": { "type": "string", "minLength": 1, "description": "Branch or tag the consumer read from." },
-          "kb_commit": { "$ref": "#/$defs/sha", "description": "Commit in which the artifact was read (contains .ckb/ckb.json)." },
+          "kb_commit": { "$ref": "#/$defs/sha", "description": "Commit in which the artifact was read (contains ckb/ckb.json)." },
           "analysed_commit_sha": { "$ref": "#/$defs/sha", "description": "The artifact's repo.commit_sha." },
           "ckb_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$" },
-          "artifact_path": { "const": ".ckb/ckb.json" },
+          "artifact_path": { "const": "ckb/ckb.json" },
           "artifact_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
           "freshness": { "enum": ["fresh", "stale", "unknown"], "description": "Result of the freshness rule evaluated at kb_commit." }
         }
