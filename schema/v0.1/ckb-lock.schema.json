@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/riddhimohansharma/ckb-spec/schema/v0.1/ckb-lock.schema.json",
+  "$id": "https://github.com/riddhimohansharma/codebase-kb-spec/schema/v0.1/ckb-lock.schema.json",
   "title": "CKB lock file (ckb.lock.json)",
   "description": "DRAFT v0.1. Written by a CONSUMER to pin exactly which committed CKB artifact it ingested from each repository, so a multi-repo graph is reproducible. Producers never write this file.",
   "type": "object",

@@ -4,6 +4,10 @@ All notable changes to the CKB specification. Format: [Keep a Changelog](https:/
 
 ## [0.1] — 2026-09-30 — DRAFT
 
+### Changed
+- Repository renamed from `ckb-spec` to **`codebase-kb-spec`** to match the codebase-kb-* family. Schema `$id`s now use the new URL. The format name (CKB), `ckb.json` and `ckb_version` are unchanged.
+
+
 ### Added
 - **Canonical location** `<repo-root>/.ckb/ckb.json`: the KB is committed in the repo it describes.
 - **Freshness rule**: fresh at `Y` if and only if nothing outside `.ckb/` changed since `commit_sha`.
