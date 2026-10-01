@@ -88,8 +88,8 @@ IDs are `<type>:<key>` and MUST be deterministic: regenerating at the same commi
 | `interface` (rpc) | `interface:rpc:<role>:<service>/<method>` |
 | `interface` (cli, library) | `interface:<kind>:<role>:<symbol>` |
 | `dependency` | `dependency:<package_key>` |
-| `datastore` | `datastore:<engine>:<schema>.<table>`, omitting any segments that are absent |
-| `business_rule`, `workflow` | `<type>:<kebab-slug>`, where the slug comes from the rule or workflow name and collisions get `-2`, `-3`, … appended in order of first appearance |
+| `datastore` | `datastore:<engine>:<schema>.<table>`, omitting absent segments. If both are absent, use `datastore:<engine>:<kebab-slug(name)>` so unnamed stores don't collide |
+| `business_rule`, `workflow` | `<type>:<kebab-slug>` from the name. Collisions get `-2`, `-3`, … in **(slug, name, first provenance path, line, statement)** order, independent of draft order. A name with no ASCII slug uses `u-<codepoints>` |
 
 Never derive IDs from array position, timestamps, or randomness.
 

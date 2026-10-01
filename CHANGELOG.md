@@ -15,5 +15,5 @@ All notable changes to the CKB specification. Format: [Keep a Changelog](https:/
 - Normalized join keys for packages, HTTP, events, RPC, datastores, internal modules.
 - Mandatory provenance (`path`, `line`) on every claim unless confidence is `unknown`.
 - Per-claim confidence (`confirmed | inferred | unknown`) and artifact-level `confidence_summary`.
-- Deterministic entity ID rules.
+- Deterministic entity ID rules. Unnamed datastores use a slug of the name, and slug collisions are ordered by content, not by draft order.
 - Semantic rules R1–R7 (`tests/semantic.jq`) and conformance suite (`tests/validate.sh`).
