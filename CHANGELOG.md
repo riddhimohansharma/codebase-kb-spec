@@ -1,5 +1,11 @@
 # Changelog
 
+
+## 2026-10-10
+- Canonical KB directory is `.ckb/` (was `ckb/`), so the KB is hidden at the repo root. `ckb_version` stays `0.2` (0.x policy).
+- Breaking for lock files and R7: lock `artifact_path` is `.ckb/ckb.json`, and `ckb/ckb.json` is now rejected. Freshness excludes `.ckb` (was `ckb`).
+- v0.1 schemas, lock examples and R7 fixtures updated to match.
+
 ## 2026-10-01
 - Licensed under CC BY-ND 4.0; added TRADEMARKS.md. Contributions are not accepted.
 

@@ -37,25 +37,25 @@ A **producer** analyzes a codebase and writes a `ckb.json` artifact. A **consume
 A CKB is **committed inside the repository it describes**, at a fixed, well-known path, so the knowledge base is versioned with the code and any consumer can find it in any repo without running a producer. The folder is deliberately **not** a dot-folder: it is documentation meant to be read, so it must show up in Finder, Explorer and `ls`, as well as on GitHub and in IDEs.
 
 ```
-<repo-root>/ckb/
+<repo-root>/.ckb/
 ├── ckb.json          # the artifact (this spec)  ← canonical, REQUIRED
 ├── manifest.json     # producer job record (optional, producer-defined)
 ├── README.md         # human index (optional)
 └── *.md              # human-readable docs (optional)
 ```
 
-- Producers MUST write only inside `ckb/`, and MUST NOT analyse or cite `ckb/` itself (see R7).
-- Producers SHOULD NOT commit. A person or CI commits `ckb/`, which keeps generation read-only.
+- Producers MUST write only inside `.ckb/`, and MUST NOT analyse or cite `.ckb/` itself (see R7).
+- Producers SHOULD NOT commit. A person or CI commits `.ckb/`, which keeps generation read-only.
 - A repo analysed without write access (for example a third-party clone) produces the same layout elsewhere. It is simply not committed.
 
 ## Freshness: `commit_sha` and the committed KB
 
-`repo.commit_sha` is the **source commit that was analysed**. Committing `ckb/` creates a new commit, which is expected. The artifact is still accurate because only the KB changed.
+`repo.commit_sha` is the **source commit that was analysed**. Committing `.ckb/` creates a new commit, which is expected. The artifact is still accurate because only the KB changed.
 
 > **Freshness rule.** An artifact is **fresh at commit `Y`** if and only if
-> `git diff --quiet <commit_sha> Y -- . ':(exclude)ckb'` succeeds, meaning no file outside `ckb/` changed between the analysed commit and `Y`. Otherwise it is **stale**. If `commit_sha` is not an ancestor of `Y` or not present, it is **unknown**.
+> `git diff --quiet <commit_sha> Y -- . ':(exclude).ckb'` succeeds, meaning no file outside `.ckb/` changed between the analysed commit and `Y`. Otherwise it is **stale**. If `commit_sha` is not an ancestor of `Y` or not present, it is **unknown**.
 
-Producers use this rule to skip regeneration when nothing changed. Consumers use it to decide whether to trust or re-request an artifact. Because the rule excludes `ckb/`, committing the KB never makes it stale.
+Producers use this rule to skip regeneration when nothing changed. Consumers use it to decide whether to trust or re-request an artifact. Because the rule excludes `.ckb/`, committing the KB never makes it stale.
 
 ## The load-bearing guarantees
 
@@ -199,7 +199,7 @@ An artifact conforms to CKB v0.2 when it:
    - **R4**: `confidence_summary` counts equal the actual claim counts (entities plus relations).
    - **R5**: workflow step `order` values run 1..n with no gaps.
    - **R6**: `end_line` is not less than `line`.
-   - **R7**: nothing points into `ckb/`: no provenance path, component `module_id`, dependency or artifact `manifest_path`, or `api_spec` path. The KB never describes itself.
+   - **R7**: nothing points into `.ckb/`: no provenance path, component `module_id`, dependency or artifact `manifest_path`, or `api_spec` path. The KB never describes itself.
    - **R8**: every ID equals `ckb_derive_id(<collection>)` from `derive.jq`, for all collections except `business_rules` and `workflows`.
    - **R9**: reserved (not assigned in v0.2).
    - **R10**: every relation is an allowed `(from type, kind, to type)` triple, with the role and kind conditions in the relation table.
@@ -223,16 +223,16 @@ To run only the v0.2 semantic rules: `jq -L schema/v0.2 -f schema/v0.2/semantic.
 
 A consumer that builds a view across many repositories MUST pin exactly what it ingested so the result is reproducible. For each repo it records one lock entry ([schema](schema/v0.2/ckb-lock.schema.json), [example](schema/v0.2/lock-examples/two-repos.json)):
 
-| Field | Meaning |
-|---|---|
-| `repo_url`, `ref` | Where the artifact was read (canonical, credentials stripped) |
-| `kb_commit` | The commit the consumer read `ckb/ckb.json` from |
-| `analysed_commit_sha` | The artifact's `repo.commit_sha` |
-| `ckb_version` | The artifact's `ckb_version` |
-| `artifact_sha256` | Hash of the exact bytes ingested |
-| `freshness` | The freshness rule evaluated at `kb_commit` |
+| Field                 | Meaning                                                       |
+| -----------------------| ---------------------------------------------------------------|
+| `repo_url`, `ref`     | Where the artifact was read (canonical, credentials stripped) |
+| `kb_commit`           | The commit the consumer read `.ckb/ckb.json` from              |
+| `analysed_commit_sha` | The artifact's `repo.commit_sha`                              |
+| `ckb_version`         | The artifact's `ckb_version`                                  |
+| `artifact_sha256`     | Hash of the exact bytes ingested                              |
+| `freshness`           | The freshness rule evaluated at `kb_commit`                   |
 
-Lock rules ([`tests/lock-semantic.jq`](tests/lock-semantic.jq), shared by v0.1 and v0.2): **L1**, one entry per `(repo_url, ref)`; **L2**, entries sorted by `(repo_url, ref)` so lock diffs stay minimal. To upgrade, a consumer re-reads each repo's `ckb/ckb.json` and rewrites only the entries that changed. The same lock file therefore reproduces the same cross-repo result, the way a package lockfile does. A v0.2 lock may pin artifacts of different `ckb_version`s.
+Lock rules ([`tests/lock-semantic.jq`](tests/lock-semantic.jq), shared by v0.1 and v0.2): **L1**, one entry per `(repo_url, ref)`; **L2**, entries sorted by `(repo_url, ref)` so lock diffs stay minimal. To upgrade, a consumer re-reads each repo's `.ckb/ckb.json` and rewrites only the entries that changed. The same lock file therefore reproduces the same cross-repo result, the way a package lockfile does. A v0.2 lock may pin artifacts of different `ckb_version`s.
 
 Producers never read or write lock files.
 
