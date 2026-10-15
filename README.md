@@ -198,7 +198,7 @@ v0.3 keeps every v0.2 rule and adds what agents and multi-repo consumers need. A
 |---|---|---|
 | `entities.commands` | `{id: command:<kind>:<slug>, kind: build·test·run·lint·format·deploy·migrate·other, command, cwd?, manifest_path}` + relation `declares` (component → command) | How to build and test, as data |
 | `entities.invariants` | `{id: invariant:<kind>:<slug>, kind: constraint·trap·obligation, statement (≤200 chars), applies_to: [globs or ids], obligates?: [paths]}` | What an agent must respect, with evidence |
-| `repo.key` | `<host>/<path>` lowercase, derived from `url` (`ckb_repo_key`) | Cross-repo identity; the global entity IRI is `ckb://<repo.key>/<entity_id>` |
+| `repo.key` | `<host>/<path>` lowercase, derived from `url` (`ckb_repo_key`); a local-only (`file://`) repo is `local/<directory name>`, never its absolute path | Cross-repo identity; the global entity IRI is `ckb://<repo.key>/<entity_id>` |
 | `repo_profile.generated_globs`, `vendored_globs` | path globs | Files agents must not edit |
 | `repo_profile.taxonomy` | `domain`, `system`, `lifecycle` (experimental·production·deprecated·retired), `tier` (critical·high·medium·low), `tags` | Catalog placement |
 | `component.layer` | ui·api·worker·library·data·infra·tooling | Architecture layer |

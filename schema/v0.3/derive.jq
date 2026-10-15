@@ -52,7 +52,9 @@ def ckb_relation_rules: {
 };
 def ckb_prefix: split(":")[0];
 
-# Repo identity (v0.3). ckb_repo_key: "<host>/<path>" lowercase from repo.url (https://host[:port]/a/b -> host/a/b; file:// urls -> local/<path>).
-def ckb_repo_key: (.url // .repo.url) | if startswith("file://") then "local/" + ltrimstr("file://") else sub("^https://"; "") | ascii_downcase | sub(":[0-9]+/"; "/") end;
+# Repo identity (v0.3). ckb_repo_key: "<host>/<path>" lowercase from repo.url (https://host[:port]/a/b -> host/a/b).
+# A local-only repo (file:// url) gets "local/<directory name>": never the absolute path, which would leak the machine's layout.
+def ckb_repo_key: (.url // .repo.url) | if startswith("file://") then "local/" + (rtrimstr("/") | split("/") | last | gsub("\\s+"; "-") | if . == "" then "repo" else . end)
+  else sub("^https://"; "") | ascii_downcase | sub(":[0-9]+/"; "/") end;
 # Global entity IRI: the one cross-repo reference form.
 def ckb_iri($repo_key; $id): "ckb://" + $repo_key + "/" + $id;
