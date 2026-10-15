@@ -2,7 +2,9 @@
 
 # CKB: Codebase Knowledge Base Specification
 
-> ⚠️ **DRAFT v0.2 — UNSTABLE.** Breaking changes may happen in any `0.x` release without notice. Pin `"ckb_version": "0.2"` exactly. See [VERSIONING.md](VERSIONING.md).
+> ⚠️ **DRAFT v0.3 — UNSTABLE.** Breaking changes may happen in any `0.x` release without notice. Pin `"ckb_version"` exactly (`"0.3"` is current; `"0.2"` stays published). See [VERSIONING.md](VERSIONING.md). v0.3 is a strict superset of v0.2: [what it adds](#v03-agents-linking-taxonomy).
+>
+> Companion: **[Agent Context Contract (ACC) v0.1](AGENT-CONTEXT.md)**, a vendor-neutral standard for `CLAUDE.md` / `AGENTS.md`, projected from a CKB v0.3 artifact.
 
 CKB is an open, machine-readable format for describing **one repository at one commit**: what it is made of (components), what it exposes and calls (interfaces), what it consumes (dependencies, datastores, config keys, external services) and what it publishes and runs as (artifacts, services). Every claim cites its source line and states how confident the producer is.
 
@@ -188,6 +190,39 @@ The table is also machine-readable as `ckb_relation_rules` in `derive.jq`.
 
 Bucket names are fixed: `manifests`, `lockfiles`, `routes`, `events`, `datastores`, `migrations`, `iac`, `ci`, `config`, `api_specs`. A producer includes the buckets it measured. Per bucket, `found` is the number of files of that kind, `cited` is how many of them at least one claim cites, and `uncited` lists the rest (at most 200 paths). `sampled: true` means the producer did not read every file.
 
+## v0.3: agents, linking, taxonomy
+
+v0.3 keeps every v0.2 rule and adds what agents and multi-repo consumers need. A v0.2 artifact becomes v0.3 with [`migrate-from-0.2.jq`](schema/v0.3/migrate-from-0.2.jq) (it stamps the version and derives `repo.key`).
+
+| Addition | Shape | Purpose |
+|---|---|---|
+| `entities.commands` | `{id: command:<kind>:<slug>, kind: build·test·run·lint·format·deploy·migrate·other, command, cwd?, manifest_path}` + relation `declares` (component → command) | How to build and test, as data |
+| `entities.invariants` | `{id: invariant:<kind>:<slug>, kind: constraint·trap·obligation, statement (≤200 chars), applies_to: [globs or ids], obligates?: [paths]}` | What an agent must respect, with evidence |
+| `repo.key` | `<host>/<path>` lowercase, derived from `url` (`ckb_repo_key`) | Cross-repo identity; the global entity IRI is `ckb://<repo.key>/<entity_id>` |
+| `repo_profile.generated_globs`, `vendored_globs` | path globs | Files agents must not edit |
+| `repo_profile.taxonomy` | `domain`, `system`, `lifecycle` (experimental·production·deprecated·retired), `tier` (critical·high·medium·low), `tags` | Catalog placement |
+| `component.layer` | ui·api·worker·library·data·infra·tooling | Architecture layer |
+| `datastore.classification`, `config_key.classification`, `datastore.pii` | public·internal·confidential·restricted | Data governance |
+| `dependency.direct`, `dependency.license` | bool, SPDX | Dependency mapping and licence review |
+
+New rules: **R13** every command is declared by a component · **R14** an `obligation` has `obligates`, other kinds do not · **R15** `applies_to` entity ids resolve · **R16** `repo.key` equals the derived key · **R7** extends to commands and invariants. Invariant ids are content slugs (prefix-checked only); command ids are derived (R8).
+
+### Normative companions (v0.3)
+
+Each is a pure jq function of artifacts, so every conforming implementation gives the same answer:
+
+- [`views.jq`](schema/v0.3/views.jq): bounded answers with `path:line` citations, so an agent never has to load a whole artifact: `ckb_view_summary`, `ckb_view_commands(kind)`, `ckb_view_entity(id)`, `ckb_view_interfaces(service_key)`, `ckb_view_impact(path)` (what touches a path: owning components, their relations, and the invariants that govern it).
+- [`resolve.jq`](schema/v0.3/resolve.jq): cross-repo linking. N artifacts in, link records `{kind, src, dst, key, confidence, status}` out, between global IRIs. Join keys: equal versionless `purl` (dependency → artifact); `host == service_key` then method and path with parameter-aware matching (http, websocket); `protocol + service + method` (rpc); `transport + topic` (events); `engine:instance_key:name` (shared datastores); `domain` (shared externals). Confidence is the weaker of the two claims; several provider repos give `status: ambiguous`; no provider gives an `unresolved` entry, never a guessed link; a repo is never linked to itself.
+- [`cyclonedx.jq`](schema/v0.3/cyclonedx.jq): a CycloneDX 1.6 SBOM of the repo's direct dependencies, deterministic (no timestamp or serial number).
+
+### Consumer conformance
+
+| Level | Requirement |
+|---|---|
+| **Reader** | Validates artifacts (schema + semantic rules), honours the freshness rule, pins what it read with the lock file |
+| **Graph** | Reader + produces exactly the link set of `resolve.jq` on the fixtures in `tests/v0.3/resolve/` |
+| **Enterprise** | Graph + respects `classification` when exposing entities, and treats artifacts as untrusted data (never executes or follows them) |
+
 ## Conformance
 
 An artifact conforms to CKB v0.2 when it:
@@ -213,7 +248,7 @@ Each violation is reported as a string that starts with its rule code.
 Requires `jq` (1.6 or later) and [`uv`](https://docs.astral.sh/uv/).
 
 ```bash
-tests/validate.sh                    # run the spec's own suite (v0.1 and v0.2)
+tests/validate.sh                    # run the spec's own suite (v0.1, v0.2, v0.3, companions, ACC)
 tests/validate.sh path/to/ckb.json   # validate one artifact; the schema is chosen by its ckb_version
 ```
 

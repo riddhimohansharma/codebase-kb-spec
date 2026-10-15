@@ -1,0 +1,53 @@
+{
+  "links": [
+    {
+      "confidence": "inferred",
+      "dst": "ckb://github.com/example/payments-service/interface:http:provides:payments-service:POST:/payments",
+      "key": "POST /payments",
+      "kind": "calls_http",
+      "src": "ckb://github.com/example/orders-service/interface:http:consumes:payments-service:POST:/payments",
+      "status": "resolved"
+    },
+    {
+      "confidence": "inferred",
+      "dst": "ckb://github.com/example/payments-service/interface:rpc:provides:grpc:payments.v1.PaymentService/Refund",
+      "key": "grpc:payments.v1.PaymentService/Refund",
+      "kind": "calls_rpc",
+      "src": "ckb://github.com/example/orders-service/interface:rpc:consumes:grpc:payments.v1.PaymentService/Refund",
+      "status": "resolved"
+    },
+    {
+      "confidence": "confirmed",
+      "dst": "ckb://github.com/example/payments-service/artifact:pkg:npm/%40example/money",
+      "key": "pkg:npm/%40example/money",
+      "kind": "depends_on_artifact",
+      "src": "ckb://github.com/example/orders-service/dependency:pkg:npm/%40example/money@package.json",
+      "status": "resolved"
+    },
+    {
+      "confidence": "inferred",
+      "dst": "ckb://github.com/example/payments-service/datastore:postgres:ORDERS_DATABASE_URL:public.orders",
+      "key": "postgres:ORDERS_DATABASE_URL:public.orders",
+      "kind": "shares_datastore",
+      "src": "ckb://github.com/example/orders-service/datastore:postgres:ORDERS_DATABASE_URL:public.orders",
+      "status": "resolved"
+    },
+    {
+      "confidence": "confirmed",
+      "dst": "ckb://github.com/example/payments-service/external:api.stripe.com",
+      "key": "api.stripe.com",
+      "kind": "shares_external",
+      "src": "ckb://github.com/example/orders-service/external:api.stripe.com",
+      "status": "resolved"
+    },
+    {
+      "confidence": "confirmed",
+      "dst": "ckb://github.com/example/payments-service/interface:event:provides:kafka:payments.settled",
+      "key": "kafka:payments.settled",
+      "kind": "subscribes_event",
+      "src": "ckb://github.com/example/orders-service/interface:event:consumes:kafka:payments.settled",
+      "status": "resolved"
+    }
+  ],
+  "unresolved": []
+}

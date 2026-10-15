@@ -1,0 +1,23 @@
+{
+  "links": [],
+  "unresolved": [
+    {
+      "key": "POST /payments",
+      "kind": "calls_http",
+      "reason": "no provider among the given artifacts",
+      "src": "ckb://github.com/example/orders-service/interface:http:consumes:payments-service:POST:/payments"
+    },
+    {
+      "key": "grpc:payments.v1.PaymentService/Refund",
+      "kind": "calls_rpc",
+      "reason": "no provider among the given artifacts",
+      "src": "ckb://github.com/example/orders-service/interface:rpc:consumes:grpc:payments.v1.PaymentService/Refund"
+    },
+    {
+      "key": "kafka:payments.settled",
+      "kind": "subscribes_event",
+      "reason": "no provider among the given artifacts",
+      "src": "ckb://github.com/example/orders-service/interface:event:consumes:kafka:payments.settled"
+    }
+  ]
+}

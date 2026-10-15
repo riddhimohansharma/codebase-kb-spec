@@ -1,0 +1,149 @@
+{
+  "ckb_version": "0.3",
+  "generator": {
+    "name": "codebase-kb-engine",
+    "version": "0.14.0"
+  },
+  "repo": {
+    "url": "https://github.com/example/payments-service",
+    "key": "github.com/example/payments-service",
+    "branch": "main",
+    "commit_sha": "1111111111111111111111111111111111111111",
+    "generated_at": "2026-10-15T00:00:00Z"
+  },
+  "repo_profile": {
+    "languages": [],
+    "frameworks": [],
+    "build_tools": [],
+    "owners": []
+  },
+  "entities": {
+    "components": [
+      {
+        "id": "component:src",
+        "name": "src",
+        "module_id": "src",
+        "kind": "service",
+        "confidence": "confirmed",
+        "provenance": [
+          {
+            "path": "src/index.ts",
+            "line": 1
+          }
+        ]
+      }
+    ],
+    "interfaces": [
+      {
+        "id": "interface:http:provides:payments-service:POST:/payments",
+        "name": "pay",
+        "kind": "http",
+        "role": "provides",
+        "service_key": "payments-service",
+        "http": {
+          "method": "POST",
+          "normalized_path": "/payments"
+        },
+        "confidence": "confirmed",
+        "provenance": [
+          {
+            "path": "src/pay.ts",
+            "line": 5
+          }
+        ]
+      },
+      {
+        "id": "interface:rpc:provides:grpc:payments.v1.PaymentService/Refund",
+        "name": "refund",
+        "kind": "rpc",
+        "role": "provides",
+        "rpc": {
+          "protocol": "grpc",
+          "service": "payments.v1.PaymentService",
+          "method": "Refund"
+        },
+        "confidence": "inferred",
+        "provenance": [
+          {
+            "path": "src/pay.ts",
+            "line": 9
+          }
+        ]
+      },
+      {
+        "id": "interface:event:provides:kafka:payments.settled",
+        "name": "settled",
+        "kind": "event",
+        "role": "provides",
+        "event": {
+          "transport": "kafka",
+          "topic": "payments.settled"
+        },
+        "confidence": "confirmed",
+        "provenance": [
+          {
+            "path": "src/pay.ts",
+            "line": 12
+          }
+        ]
+      }
+    ],
+    "artifacts": [
+      {
+        "id": "artifact:pkg:npm/%40example/money",
+        "name": "money",
+        "purl": "pkg:npm/%40example/money",
+        "kind": "package",
+        "manifest_path": "package.json",
+        "confidence": "confirmed",
+        "provenance": [
+          {
+            "path": "package.json",
+            "line": 2
+          }
+        ]
+      }
+    ],
+    "datastores": [
+      {
+        "id": "datastore:postgres:ORDERS_DATABASE_URL:public.orders",
+        "name": "orders",
+        "engine": "postgres",
+        "instance_key": "ORDERS_DATABASE_URL",
+        "schema": "public",
+        "table": "orders",
+        "access": "read",
+        "confidence": "inferred",
+        "provenance": [
+          {
+            "path": "src/pay.ts",
+            "line": 20
+          }
+        ]
+      }
+    ],
+    "external_services": [
+      {
+        "id": "external:api.stripe.com",
+        "name": "Stripe",
+        "domain": "api.stripe.com",
+        "confidence": "confirmed",
+        "provenance": [
+          {
+            "path": "src/pay.ts",
+            "line": 30
+          }
+        ],
+        "vendor": "Stripe",
+        "category": "payments"
+      }
+    ]
+  },
+  "relations": [],
+  "confidence_summary": {
+    "confirmed": 5,
+    "inferred": 2,
+    "unknown": 0,
+    "overall": "inferred"
+  }
+}
