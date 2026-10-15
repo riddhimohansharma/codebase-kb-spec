@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-10-15
+- Freshness rule also excludes the repo-root `CLAUDE.md` and `AGENTS.md` (`':(exclude)CLAUDE.md' ':(exclude)AGENTS.md'`), so a producer can create agent instructions without making the artifact stale. Normative change under the 0.x policy; `ckb_version` stays `0.2`.
+
 ## 2026-10-10
 - Canonical KB directory is `.ckb/` (was `ckb/`), so the KB is hidden at the repo root. `ckb_version` stays `0.2` (0.x policy).
 - Breaking for lock files and R7: lock `artifact_path` is `.ckb/ckb.json`, and `ckb/ckb.json` is now rejected. Freshness excludes `.ckb` (was `ckb`).

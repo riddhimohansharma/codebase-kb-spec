@@ -53,9 +53,9 @@ A CKB is **committed inside the repository it describes**, at a fixed, well-know
 `repo.commit_sha` is the **source commit that was analysed**. Committing `.ckb/` creates a new commit, which is expected. The artifact is still accurate because only the KB changed.
 
 > **Freshness rule.** An artifact is **fresh at commit `Y`** if and only if
-> `git diff --quiet <commit_sha> Y -- . ':(exclude).ckb'` succeeds, meaning no file outside `.ckb/` changed between the analysed commit and `Y`. Otherwise it is **stale**. If `commit_sha` is not an ancestor of `Y` or not present, it is **unknown**.
+> `git diff --quiet <commit_sha> Y -- . ':(exclude).ckb' ':(exclude)CLAUDE.md' ':(exclude)AGENTS.md'` succeeds, meaning no file outside `.ckb/` and the two repo-root agent-context files changed between the analysed commit and `Y`. Otherwise it is **stale**. If `commit_sha` is not an ancestor of `Y` or not present, it is **unknown**.
 
-Producers use this rule to skip regeneration when nothing changed. Consumers use it to decide whether to trust or re-request an artifact. Because the rule excludes `.ckb/`, committing the KB never makes it stale.
+Producers use this rule to skip regeneration when nothing changed. Consumers use it to decide whether to trust or re-request an artifact. Because the rule excludes `.ckb/`, committing the KB never makes it stale. It also excludes the repo-root `CLAUDE.md` and `AGENTS.md` (agent instructions, not source), so a producer may create them without invalidating the artifact. Only those two exact root paths are excluded.
 
 ## The load-bearing guarantees
 
