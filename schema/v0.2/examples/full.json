@@ -6,7 +6,7 @@
     "commit_sha": "89abcdef0123456789abcdef0123456789abcdef",
     "generated_at": "2026-09-30T12:00:00Z"
   },
-  "generator": { "name": "codebase-kb-engine", "version": "0.8.0" },
+  "generator": { "name": "codebase-kb-engine", "version": "0.8.0", "product_name": "Codebase Knowledge Base Engine" },
   "repo_profile": {
     "languages": [{ "name": "typescript", "files": 118 }, { "name": "sql", "files": 4 }],
     "frameworks": ["express"],

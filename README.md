@@ -14,7 +14,7 @@ A **producer** analyzes a codebase and writes a `ckb.json` artifact. A **consume
 {
   "ckb_version": "0.2",
   "repo": { "url": "https://github.com/example/orders-service", "branch": "main", "commit_sha": "<40 hex>", "generated_at": "2026-09-30T12:00:00Z" },
-  "generator": { "name": "...", "version": "..." },
+  "generator": { "name": "...", "version": "...", "product_name": "..." },
   "repo_profile": { "languages": [], "frameworks": [], "build_tools": [], "license": "MIT", "owners": [] },
   "coverage": { "files_total": 142, "sampled": false, "buckets": {} },
   "confidence_summary": { "confirmed": 47, "inferred": 7, "unknown": 1, "overall": "inferred" },
