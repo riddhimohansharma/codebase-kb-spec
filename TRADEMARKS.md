@@ -1,6 +1,6 @@
 # CKB trademark and conformance policy
 
-"CKB", "Codebase Knowledge Base" and "CKB-compatible" (the **Marks**) are trademarks of Riddhi Mohan Sharma. This policy keeps the specification a single, trustworthy standard. The license (Apache-2.0) covers the specification text and schemas. This policy covers the names.
+"CKB", "Codebase Knowledge Base" and "CKB-compatible" (the **Marks**, together with the CKB icon and logo) are trademarks of Riddhi Mohan Sharma. This policy keeps the specification a single, trustworthy standard. The license (Apache-2.0) covers the specification text and schemas. This policy covers the names.
 
 ## You may, without asking
 - Implement the specification, as a producer or a consumer, in any software, including commercial software.

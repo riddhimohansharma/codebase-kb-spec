@@ -2,8 +2,7 @@ CKB — Codebase Knowledge Base Specification
 Copyright 2026 Riddhi Mohan Sharma
 
 This specification (JSON Schemas, derive.jq, semantic rules, examples and tests) is licensed under the
-Apache License, Version 2.0 (see LICENSE). The Apache license grants no trademark rights: the names "CKB",
-"Codebase Knowledge Base" and "CKB-compatible" are governed by TRADEMARKS.md.
+Apache License, Version 2.0 (see LICENSE).
 
-Revisions up to and including commit 39c5392 were published under the MIT License. Releases after that and
-before this notice were published under CC BY-ND 4.0; those exact revisions remain available under those terms.
+The Apache license grants no trademark rights. The names "CKB", "Codebase Knowledge Base" and "CKB-compatible",
+and the CKB icon and logo in assets/, are Marks governed by TRADEMARKS.md and are not licensed under Apache-2.0.
